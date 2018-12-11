@@ -1,0 +1,296 @@
+<html>
+	<head>
+	<title>Agar.io Multiplayer Game</title>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+	<style>
+	@import url('https://fonts.googleapis.com/css?family=Playfair+Display+SC');
+	body 
+	{ 
+		background: #FDF0D5; 
+		margin: 0;
+
+	}
+
+	.meniu{
+		display: block;
+		position: fixed;
+		width: 300px;
+		height: 300px;
+		top: 50%;
+		left: 50%;
+		margin-top: -170px; /* Negative half of height. */
+		margin-left: -150px; /* Negative half of width. */
+		animation-duration: 5s;
+		animation-name: plutire;
+		animation-iteration-count: infinite;
+		animation-timing-function: ease;
+		z-index: 4;
+	}
+	@keyframes plutire{
+		0%{
+			top:50%;
+		}
+		50%{
+			top: 55%;
+		}
+		100%{
+			top: 50%;
+		}
+	}
+	.meniu ul {
+	  list-style-type: none;
+	  margin: 0;
+	  padding: 0;
+	  overflow: hidden;
+	  background-color: #D81E5B;
+	  border-radius: 160px;
+	  animation-duration: 5s;
+		animation-name: culoare_b;
+		animation-iteration-count: infinite;
+		animation-timing-function: ease;
+	}
+	@keyframes culoare_b{
+		0%{
+			background-color: #D81E5B;
+		}
+		50%{
+			background-color: #DC1B5F;
+		}
+		100%{
+			background-color: #D81E5B;
+		}
+	}
+	li h1{
+	  display: block;
+	  color: white;
+	  text-align: center;
+	  padding: 14px 16px;
+	  text-decoration: none;
+	  font-family: 'Playfair Display SC', serif;
+	  font-size: 50px;
+	}
+	li h2{
+	  display: block;
+	  color: white;
+	  text-align: center;
+	  text-decoration: none;
+	  margin-top: -50px;
+	  margin-bottom: 20px;
+	  font-family: 'Playfair Display SC', serif;
+	  font-size: 10px;
+	}
+
+	li a {
+	  display: block;
+	  color: white;
+	  text-align: center;
+	  padding: 14px 16px;
+	  text-decoration: none;
+	  font-family: 'Playfair Display SC', serif;
+	}
+
+	li a:hover:not(.active) {
+	  background-color: #FDF0D5;
+	  color: #D81E5B;
+	}
+
+	.active {
+	  background-color: #FDF0D5;
+	  color: #D81E5B;
+	}
+	.instructiuni{
+		display: none;
+		position: fixed;
+		width: 600px;
+		height: 600px;
+		top: 50%;
+		left: 50%;
+		margin-top: -300px; /* Negative half of height. */
+		margin-left: -300px; /* Negative half of width. */
+		animation-duration: 5s;
+		animation-name: plutire;
+		animation-iteration-count: infinite;
+		animation-timing-function: ease;
+		z-index: 6;
+		padding:30px;
+	}
+	.instructiuni ul {
+	  list-style-type: none;
+	  margin: 0;
+	  padding: 0;
+	  overflow: hidden;
+	  background-color: #D81E5B;
+	  border-radius: 160px;
+	  animation-duration: 5s;
+		animation-name: culoare_b;
+		animation-iteration-count: infinite;
+		animation-timing-function: ease;
+	}
+	canvas 
+	{
+		width: 70%;
+		height: 100%;
+		border: 5px solid #D81E5B;
+		background: #C6D8D3;
+		animation-duration: 50s;
+		animation-name: culoare_c;
+		animation-iteration-count: infinite;
+		animation-direction: alternate;
+	}
+	@keyframes culoare_c{
+		0%{
+			background-color: #FDF0D5;
+		}
+		100%{
+			background-color: #FDF0DD;
+		}
+	}
+	.game-over-notify {
+		position: fixed;
+		display: none;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(58, 51, 53, 0.7);
+		align-items: center;
+		justify-content: center;
+		font-family: 'Playfair Display SC', serif;
+		font-size: 60px;
+		font-weight: bold;
+		color: #FDF0D5;
+		text-shadow: 2px 2px 5px rgba(58,51,53,0.6);
+		z-index: 2;
+	}
+	.game-over-notify a{
+	  text-decoration: none;
+	  color: #FDF0D5;
+	}
+	.game-over-notify a:hover{
+	  text-decoration: none;
+	  color: #D81E5B;
+	}
+	.game-over-notify h1{
+	  font-family: 'Playfair Display SC', serif;
+	  font-size: 70px;
+	  text-align: center;
+	}
+	h3{
+	  color: white;
+	  text-align: center;
+	  text-decoration: none;
+	  font-family: 'Playfair Display SC', serif;
+	  font-size: 20px;
+	}
+	.game-over-notify h3{
+	  color: white;
+	  text-align: center;
+	  text-decoration: none;
+	  font-family: 'Playfair Display SC', serif;
+	  font-size: 20px;
+	}
+	.scor{
+		height: 100%;
+		width: 30%;
+		position: fixed;
+		z-index: 1;
+		top: 0;
+		right: 0;
+		background-color: #D81E5B;
+		overflow-x: hidden;
+  		padding-top: 20px;
+	}
+	.scor li {
+	  padding: 6px 8px 0px 5px;
+	  text-decoration: none;
+	  font-size: 25px;
+	  font-family: 'Playfair Display SC', serif;
+	  color: #FDF0D5;
+	  display: block;
+	}
+	.blurare{
+		
+	}
+	.invizibil{
+		position: fixed;
+		background-color: #FDF0D5;
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		z-index: 2;
+	}
+	</style>
+	</head>
+	<body>
+		<div class="meniu" id="meniu_d">
+			<ul>
+				<li><h1>AGARIO</h1></li>
+				<li><h2>by Alexandru & Ioan</h2></li>
+			  <li><a href="#home" onclick="myFunction(); myFunction2()">Joacă</a></li>
+			  <li><a href="#news" onclick="myFunction(); myFunction3();">Instrucțiuni</a></li>
+			  <li><a href="#contact" onclick="myFunction(); myFunction2()">Înapoi</a></li>
+			  <br>
+			</ul>
+		</div>
+		<div class="instructiuni" id="instructiuni_d" style="display:none">
+			<ul>
+			  <li><h1>Instruncțiuni</h1></li>
+			  <li><i class="far fa-keyboard" style="color: white; font-size: 60px; margin-left: 44%;"></i> <h3>Pentru a controla personajul folosiți tastele <br>W A S D <br> Scopul jocului este de a manca toate bulinele mai mici și de a vă feri de cele mai mari. Ultimul rămas va fi declarat câștigător.<br> Succes!</h3></li>
+			  <li><a href="#contact" onclick="myFunction(); myFunction3()">Înapoi</a></li>
+			  <br>
+			</ul>
+		</div>
+		<div class="invizibil" id="fundal_d"></div>
+		<div class="blurare">
+		<div class="joc">
+			<canvas id="canvas"></canvas>
+			<div class="game-over-notify">
+				<h1 id="youWon"></h1>
+			</div>
+		</div>
+		<div class="scor">
+			<ul>
+				<li>
+					<h3>Scor</h3>
+				</li>
+				<li>
+					<p id="userNumber"></p>
+				</li>
+				<li style="position: fixed; bottom: 0; padding-bottom: 20px;" onclick="myFunction(); myFunction2()"><a href="#" style="border-radius: 30px;">PAUZA	</a></li>
+			</ul>
+		</div>
+		</div>
+	</body>	
+	<script>
+	function myFunction() {
+	  var x = document.getElementById("meniu_d");
+	  if (x.style.display === "none") {
+	    x.style.display = "block";
+	  } else {
+	    x.style.display = "none";
+	  }
+	}
+	function myFunction2() {
+	  var x = document.getElementById("fundal_d");
+	  if (x.style.display === "none") {
+	    x.style.display = "block";
+	  } else {
+	    x.style.display = "none";
+	  }
+	}
+	function myFunction3() {
+	  var x = document.getElementById("instructiuni_d");
+	  if (x.style.display === "none") {
+	    x.style.display = "block";
+	  } else {
+	    x.style.display = "none";
+	  }
+	}
+	
+</script>
+  <script src="/static/game.js"></script>
+</html>

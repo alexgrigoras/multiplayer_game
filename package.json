@@ -1,0 +1,23 @@
+{
+  "name": "Agario multiplayer game",
+  "version": "1.0.0",
+  "description": "A game where a circle eats other circles and gets bigger (the biggest wins)",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/"
+  },
+  "author": "Alexandru Grigoaras and Ioan Suflet",
+  "license": "WTFPL",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "dependencies": {
+    "express": "^4.14.0",
+    "socket.io": "^1.7.2"
+  }
+}
