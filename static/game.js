@@ -1,3 +1,10 @@
+/*
+ *	Server for multiplayer nodejs game
+ *	Application made by:
+ *	- Alexandru Grigoras
+ *	- Ioan Suflet
+ */
+
 var socket = io();
 var canvas = document.getElementById('canvas');
 canvas.width = 800;
