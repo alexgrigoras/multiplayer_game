@@ -5,7 +5,7 @@
  *	- Ioan Suflet
  */
 
-var socket = io();
+var socket = io.connect('https://nodejs-web-game.herokuapp.com:5000');
 var canvas = document.getElementById('canvas');
 canvas.width = 800;
 canvas.height = 600;
