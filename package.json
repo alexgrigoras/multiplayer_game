@@ -1,5 +1,5 @@
 {
-  "name": "Agario multiplayer game",
+  "name": "Game",
   "version": "1.0.0",
   "description": "A game where a circle eats other circles and gets bigger (the biggest wins)",
   "main": "server.js",
