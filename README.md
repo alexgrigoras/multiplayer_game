@@ -1,9 +1,11 @@
-# Multiplayer NodeJS Game
+# Multiplayer Web Game
 
 ## Description
-A game similar to agar.io which has two circles that grow bigger when they eat other circles.
+A 2-player game similar to agar.io in which players are represented by circles that grow bigger when they eat other spawned circles.
 
-## Components
+The demo of the application is available [here](https://alexgrigoras.github.io/multiplayer_game/). The application has only the frontend available because the nodejs backend is not hosted anywhere. To test the application, clone the repository and run it locally.
+
+## Architecture
 1. Frontend
 	* HTML
 	* CSS
